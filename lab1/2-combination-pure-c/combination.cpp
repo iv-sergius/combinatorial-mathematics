@@ -7,7 +7,7 @@
 using namespace std;
 
 typedef unsigned int NumberType;
-static const size_t MAX_N = 128;
+static const size_t MAX_N = 256;
 
 void PrintArr(NumberType * arr, size_t n) {
 	for (size_t i = 0; i < n - 1; ++i) {
