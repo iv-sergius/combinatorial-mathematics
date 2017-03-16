@@ -10,6 +10,8 @@ using namespace std;
 typedef unsigned int NumberType;
 static const size_t MAX_N = 128;
 
+// get number of permutation
+// with function change array
 int getN(NumberType *arr, size_t n)
 {
 	int k = 0;

@@ -88,7 +88,7 @@ void PrintAllPermutations()
 	
 	while (timeInSec < 2.0 && isResultRight)
 	{
-		count = 1;
+		count = 0;
 		++n;
 		factorial *= n;
 		for (i = 0; i < n; ++i) {
@@ -102,7 +102,14 @@ void PrintAllPermutations()
 		while(NextPermutation(arr, n));
 		time_t endTime = clock();
 		timeInSec = (double)(endTime - startTime) / CLOCKS_PER_SEC;
-		printf("For n = %zu time = %g\n", n, timeInSec);
+		printf("For n = %2zu  time = %6g", n, timeInSec);
+		printf("  Total = %llu", count);
+		if (count == factorial)	{
+			puts(" OK");
+		} else {
+			puts(" !ERROR!");
+			return;
+		}
 	}
 }
 

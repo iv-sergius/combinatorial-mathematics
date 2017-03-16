@@ -52,17 +52,19 @@ void PrintCombinations()
 {
 	double timeInSec = 0.0;
 	bool isResultRight = true;
-	size_t i, n = 5, k = 5;
+	size_t i, n = 4, k;
 	NumberType arr[MAX_N];
 	unsigned long long nCombination = 1, count;
 
 	while (timeInSec < 2.0 && isResultRight)
 	{
-		count = 1;
-		n += 5;
-		nCombination *= n;
+		count = 0;
+		n += 2;
+		k = n / 2;
+		nCombination = 1;
 		for (i = 0; i < k; ++i) {
 			arr[i] = 1 + i;
+			nCombination = nCombination * (n - i) / arr[i];
 		}
 		time_t startTime = clock();
 		do {
@@ -71,7 +73,15 @@ void PrintCombinations()
 		} while (NextCombination(arr, n, k));
 		time_t endTime = clock();
 		timeInSec = (double)(endTime - startTime) / CLOCKS_PER_SEC;
-		printf("For n = %zu time = %g\n", n, timeInSec);
+		printf("For n = %2zu  k = %2zu  time = %6g", n, k, timeInSec);
+		printf("  Total = %llu", count);
+		if (count == nCombination) {
+			puts(" OK");
+		}
+		else {
+			puts(" !ERROR!");
+			return;
+		}
 	}
 }
 
