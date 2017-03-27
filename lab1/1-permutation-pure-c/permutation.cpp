@@ -61,16 +61,32 @@ void reverseArr(NumberType * arr, size_t from, size_t to) {
 bool NextPermutation(NumberType *arr, size_t n)
 {
 	size_t i = n - 1;
-	while (i > 0 && arr[i - 1] > arr[i]) {
-		--i;
+	if (arr[i - 1] < arr[i]) {
+		NumberType tmp = arr[i - 1];
+		arr[i - 1] = arr[i];
+		arr[i] = tmp;
+		return true;
 	}
+	do {
+		--i;
+	} while (i > 0 && arr[i - 1] > arr[i]);
+
 	if (i > 0) {
 		NumberType tmp = arr[i - 1];
-		size_t k = findNextBin(arr, i, n-1, tmp);
-		arr[i - 1] = arr[k];
-		arr[k] = tmp;
-		// reverse tail
-		reverseArr(arr, i, n - 1);
+		size_t k = i;
+		do {
+			++k;
+		} while (arr[k] > tmp);
+		arr[i - 1] = arr[k - 1];
+		arr[k - 1] = tmp;
+		k = n - 1;
+		do {
+			tmp = arr[i];
+			arr[i] = arr[k];
+			arr[k] = tmp;
+			++i;
+			--k;
+		} while (i < k);
 		return true;
 	}
 	else { // no more permutation
@@ -83,7 +99,7 @@ void PrintAllPermutations()
 	double timeInSec = 0.0;
 	bool isResultRight = true;
 	size_t i, n = 1;
-	NumberType arr[MAX_N];
+	static NumberType arr[MAX_N];
 	unsigned long long factorial = 1, count;
 	
 	while (timeInSec < 2.0 && isResultRight)
@@ -92,12 +108,12 @@ void PrintAllPermutations()
 		++n;
 		factorial *= n;
 		for (i = 0; i < n; ++i) {
-			arr[i] = 1 + i;
+			arr[i] = static_cast<NumberType>(1 + i);
 		}
 		time_t startTime = clock();
 		do {
 			++count;
-//			PrintArr(arr, n);
+			//PrintArr(arr, n);
 		}
 		while(NextPermutation(arr, n));
 		time_t endTime = clock();
